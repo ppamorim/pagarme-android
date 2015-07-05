@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="card_background">#ffff0000</color>
+  <color name="gray">#A1A1A1</color>
+  <color name="white">#FFFFFF</color>
+  <color name="card_border">#ffb1bcbe</color>
+  <color name="card_text_background">#00000000</color>
+  <color name="pumpkin">#F4410F</color>
+  <color name="pumpkin_dark">#DB3B0F</color>
+</resources>

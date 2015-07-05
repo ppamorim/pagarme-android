@@ -1,0 +1,14 @@
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="PagarMeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/pumpkin</item>
+    <item name="colorPrimaryDark">@color/pumpkin_dark</item>
+  </style>
+
+  <style name="PagarMeEditText">
+    <item name="android:layout_marginLeft">16dp</item>
+    <item name="android:layout_marginRight">16dp</item>
+  </style>
+
+</resources>

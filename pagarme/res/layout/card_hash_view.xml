@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_hash_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <me.pagar.CreditCardView
+      android:id="@+id/credit_card_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/cardbackground_world"
+      app:cardNameTextColor="#cccccc"
+      app:cardNumberFormat="all_digits"
+      app:cardNumberTextColor="#cccccc"
+      app:expiryDate="11/15"
+      app:expiryDateTextColor="#cccccc"
+      app:hintTextColor="#ffffff"
+      app:isEditable="false"
+      app:isCardNumberEditable="true"
+      app:putChip="true"
+      app:type="visa"
+      app:validTillTextColor="#cccccc"/>
+
+  <me.pagar.CreditCardView
+      android:id="@+id/include_back"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/cardbackground_world"
+      android:visibility="gone"
+      app:cardName="John Doe"
+      app:cardNameTextColor="#cccccc"
+      app:cardNumberFormat="all_digits"
+      app:cardNumberTextColor="#cccccc"
+      app:expiryDate="11/15"
+      app:expiryDateTextColor="#cccccc"
+      app:hintTextColor="#ffffff"
+      app:isEditable="false"
+      app:isCardNumberEditable="true"
+      app:putChip="true"
+      app:type="visa"
+      app:validTillTextColor="#cccccc"/>
+
+</merge>

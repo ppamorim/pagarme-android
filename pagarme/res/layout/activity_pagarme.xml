@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:background="?attr/colorPrimary"/>
+
+  <me.pagar.CardHashView
+      android:id="@+id/card_hash_view"
+      android:layout_width="match_parent"
+      android:layout_height="225dp"
+      android:layout_margin="16dp"
+      android:descendantFocusability="blocksDescendants"/>
+
+  <me.pagar.EditTextShadow
+      android:id="@+id/card_number_shadow"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="@style/PagarMeEditText"
+      app:hint="@string/card_number"
+      app:color_hint="@color/gray"
+      app:text_size="12sp"/>
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="@style/PagarMeEditText">
+
+    <me.pagar.EditTextShadow
+        android:id="@+id/valid_thru"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        app:hint="@string/valid_thru"
+        app:color_hint="@color/gray"
+        app:text_size="12sp"/>
+
+    <me.pagar.EditTextShadow
+        android:id="@+id/cvv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        app:hint="@string/cvv"
+        app:color_hint="@color/gray"
+        app:text_size="12sp"/>
+
+  </LinearLayout>
+
+  <me.pagar.EditTextShadow
+      android:id="@+id/card_name_shadow"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="@style/PagarMeEditText"
+      app:hint="@string/name"
+      app:color_hint="@color/gray"
+      app:text_size="12sp"/>
+
+</LinearLayout>
