@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Pagarme</string>
+  <string name="app_name">Pagar.Me</string>
   <string name="valid_till">VALID TILL</string>
   <string name="card_number_hint">ENTER CARD NUMBER</string>
   <string name="expiry_date_hint">MM/YY</string>

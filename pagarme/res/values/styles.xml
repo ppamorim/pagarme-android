@@ -4,6 +4,8 @@
   <style name="PagarMeTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/pumpkin</item>
     <item name="colorPrimaryDark">@color/pumpkin_dark</item>
+    <item name="android:textColorPrimary">@color/white</item>
+    <item name="android:textColorSecondary">@color/white</item>
   </style>
 
   <style name="PagarMeEditText">
