@@ -16,7 +16,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +37,6 @@ import static me.pagar.CardType.PATTERN_DISCOVER;
 import static me.pagar.CardType.PATTERN_MASTER_CARD;
 import static me.pagar.CardType.VISA;
 
-@SuppressLint("DefaultLocale")
 public class CreditCardView extends RelativeLayout {
 
   @IntDef({VISA, MASTERCARD, AMERICAN_EXPRESS, DISCOVER, AUTO})
@@ -70,9 +68,9 @@ public class CreditCardView extends RelativeLayout {
   private boolean mIsExpiryDateEditable = false;
   private int mHintTextColor = Color.WHITE;
   private Typeface creditCardTypeFace;
-  private EditText cardNumber;
-  private EditText cardName;
-  private EditText expiryDate;
+  private TextView cardNumber;
+  private TextView cardName;
+  private TextView expiryDate;
   private TextView validTill;
   private ImageView type;
   private ImageView brandLogo;
@@ -103,13 +101,13 @@ public class CreditCardView extends RelativeLayout {
     final LayoutInflater inflater = (LayoutInflater) mContext
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     inflater.inflate(R.layout.credit_card_view, this, true);
-    cardNumber = (EditText) findViewById(R.id.card_number);
-    cardName = (EditText) findViewById(R.id.card_name);
+    cardNumber = (TextView) findViewById(R.id.card_number);
+    cardName = (TextView) findViewById(R.id.card_name);
     type = (ImageView) findViewById(R.id.card_logo);
     brandLogo = (ImageView) findViewById(R.id.brand_logo);
     chip = (ImageView) findViewById(R.id.chip);
-    validTill = (TextView) findViewById(R.id.valid_till);
-    expiryDate = (EditText) findViewById(R.id.expiry_date);
+    validTill = (TextView) findViewById(R.id.valid_thru_card);
+    expiryDate = (TextView) findViewById(R.id.thru_date_card);
   }
 
   private void loadAttributes(@Nullable AttributeSet attrs) {
@@ -146,71 +144,15 @@ public class CreditCardView extends RelativeLayout {
   }
 
   private void initDefaults() {
-
-    // Set default background if background attribute was not entered in the xml
-    if (getBackground() == null) {
-      //setBackgroundResource(R.drawable.cardbackground_sky);
-    }
-
-    if (!mIsEditable) {
-      // If card is not set to be editable, disable the edit texts
-      cardNumber.setEnabled(false);
-      cardName.setEnabled(false);
-      expiryDate.setEnabled(false);
-    } else {
-      // If the card is editable, set the hint text and hint values which will be displayed
-      // when the edit text is blank
-      cardNumber.setHint(R.string.card_number_hint);
-      cardNumber.setHintTextColor(mHintTextColor);
-
-      cardName.setHint(R.string.card_name_hint);
-      cardName.setHintTextColor(mHintTextColor);
-
-      expiryDate.setHint(R.string.expiry_date_hint);
-      expiryDate.setHintTextColor(mHintTextColor);
-    }
-
-    //For more granular control of the editable fields. Issue #7
     if(mIsCardNameEditable!=mIsEditable){
-      //If the mIsCardNameEditable is different than mIsEditable field, the granular
-      //precedence comes into picture and the value needs to be checked and modified
-      //accordingly
-      if(mIsCardNameEditable){
-        cardName.setHint(R.string.card_name_hint);
-        cardName.setHintTextColor(mHintTextColor);
-      }
-      else{
-        cardName.setHint("");
-      }
-
       cardName.setEnabled(mIsCardNameEditable);
     }
 
     if(mIsCardNumberEditable!=mIsEditable){
-      //If the mIsCardNumberEditable is different than mIsEditable field, the granular
-      //precedence comes into picture and the value needs to be checked and modified
-      //accordingly
-      if(mIsCardNumberEditable){
-        cardNumber.setHint(R.string.card_number_hint);
-        cardNumber.setHintTextColor(mHintTextColor);
-      }
-      else{
-        cardNumber.setHint("");
-      }
       cardNumber.setEnabled(mIsCardNumberEditable);
     }
 
     if(mIsExpiryDateEditable!=mIsEditable){
-      //If the mIsExpiryDateEditable is different than mIsEditable field, the granular
-      //precedence comes into picture and the value needs to be checked and modified
-      //accordingly
-      if(mIsExpiryDateEditable){
-        expiryDate.setHint(R.string.expiry_date_hint);
-        expiryDate.setHintTextColor(mHintTextColor);
-      }
-      else{
-        expiryDate.setHint("");
-      }
       expiryDate.setEnabled(mIsExpiryDateEditable);
     }
 

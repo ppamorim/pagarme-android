@@ -2,6 +2,7 @@
 <resources>
   <color name="card_background">#ffff0000</color>
   <color name="gray">#A1A1A1</color>
+  <color name="gray_dark">#7A7A7A</color>
   <color name="white">#FFFFFF</color>
   <color name="card_border">#ffb1bcbe</color>
   <color name="card_text_background">#00000000</color>

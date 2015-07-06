@@ -1,12 +1,16 @@
 package me.pagar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class PagarMeActivity extends AppCompatActivity {
 
@@ -51,6 +55,29 @@ public class PagarMeActivity extends AppCompatActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.checkout, menu);
+    MenuItem inboxMenuItem = menu.findItem(R.id.action_checkout);
+    inboxMenuItem.setActionView(R.layout.checkout_button);
+    new Handler().post(new Runnable() {
+      @Override public void run() {
+        TextView textView = (TextView) findViewById(R.id.icon_title);
+        textView.setOnClickListener(onClickListener);
+      }
+    });
+    return true;
+  }
+
+  private View.OnClickListener onClickListener = new View.OnClickListener() {
+    @Override public void onClick(View v) {
+      onCheckoutClick();
+    }
+  };
+
+  private void onCheckoutClick() {
+    System.out.println("testeeeeeeeeeeeeeeeee");
   }
 
   private TextWatcher cardNumberTextWatcher = new TextWatcher() {

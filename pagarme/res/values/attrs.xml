@@ -10,9 +10,12 @@
   </declare-styleable>
 
   <declare-styleable name="EditTextPagarMe">
-    <attr name="hint" format="string|reference"/>
-    <attr name="color_hint" format="color|reference"/>
-    <attr name="text_size" format="dimension|reference"/>
+    <attr name="android:hint"/>
+    <attr name="android:textColor"/>
+    <attr name="android:textColorHint"/>
+    <attr name="android:textSize"/>
+    <attr name="android:imeOptions"/>
+    <attr name="android:inputType"/>
   </declare-styleable>
 
   <declare-styleable name="CreditCardView">

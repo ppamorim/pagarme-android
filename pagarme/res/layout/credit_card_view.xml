@@ -1,40 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="RtlHardcoded">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-  <EditText
+  <ImageView
+      android:id="@+id/chip"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/card_common_margin"
+      android:layout_above="@+id/card_number"
+      android:background="@mipmap/card_chip"/>
+
+  <TextView
       android:id="@+id/card_number"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_above="@+id/valid_till"
-      android:layout_alignParentLeft="true"
-      android:layout_marginBottom="@dimen/card_number_margin_bottom"
-      android:layout_marginLeft="@dimen/card_common_margin"
-      android:layout_marginRight="@dimen/card_common_margin"
-      android:layout_weight="1"
+      android:paddingLeft="@dimen/card_common_margin"
+      android:paddingTop="@dimen/card_common_margin"
+      android:paddingBottom="4dp"
+      android:paddingRight="@dimen/card_common_margin"
       android:background="@color/card_text_background"
-      android:inputType="number"
       android:maxLength="@integer/card_number_max_length"
-      android:textSize="@dimen/card_number_text_size" />
+      android:textSize="@dimen/card_number_text_size"
+      android:text="@string/dots"
+      android:layout_above="@+id/card_name"/>
 
-  <EditText
+  <TextView
       android:id="@+id/card_name"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_marginBottom="@dimen/card_common_margin"
-      android:layout_marginLeft="@dimen/card_common_margin"
-      android:layout_weight="1"
+      android:paddingLeft="@dimen/card_common_margin"
+      android:paddingTop="4dp"
+      android:paddingRight="@dimen/card_common_margin"
+      android:layout_above="@+id/valid_thru_card"
       android:background="@color/card_text_background"
       android:ellipsize="end"
-      android:inputType="textCapCharacters"
       android:maxLength="@integer/card_name_max_length"
       android:singleLine="true"
       android:textAllCaps="true"
-      android:textSize="@dimen/card_name_text_size"
-      tools:ignore="UnusedAttribute" />
+      android:text="@string/complete_name"
+      android:textSize="@dimen/card_name_text_size" />
+
+  <TextView
+      android:id="@+id/valid_thru_card"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/valid_thru_layout"
+      android:textAllCaps="true"
+      android:textSize="12sp"
+      android:layout_alignParentBottom="true"
+      android:paddingLeft="16dp"
+      android:paddingBottom="16dp"
+      android:paddingTop="16dp"
+      android:paddingRight="4dp"/>
+
+  <TextView
+      android:id="@+id/thru_date_card"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/mmaa"
+      android:layout_alignParentBottom="true"
+      android:layout_toRightOf="@+id/valid_thru_card"
+      android:layout_toEndOf="@+id/valid_thru_card"
+      android:paddingBottom="24dp"/>
 
   <ImageView
       android:id="@+id/card_logo"
@@ -44,8 +73,7 @@
       android:layout_alignParentRight="true"
       android:layout_marginBottom="@dimen/card_common_margin"
       android:layout_marginRight="@dimen/card_common_margin"
-      android:layout_weight="1"
-      android:contentDescription="@string/card_logo" />
+      android:paddingBottom="@dimen/card_common_margin"/>
 
   <ImageView
       android:id="@+id/brand_logo"
@@ -56,46 +84,7 @@
       android:layout_marginLeft="@dimen/card_common_margin"
       android:layout_marginRight="@dimen/card_common_margin"
       android:layout_marginTop="@dimen/card_common_margin"
-      android:contentDescription="@string/brand_logo" />
-
-  <ImageView
-      android:id="@+id/chip"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/card_number"
-      android:layout_alignParentLeft="true"
-      android:layout_marginBottom="@dimen/card_common_margin"
-      android:layout_marginLeft="@dimen/card_common_margin"
-      android:background="@mipmap/card_chip"
-      android:contentDescription="@string/chip_visible"
-      android:visibility="gone" />
-
-  <TextView
-      android:id="@+id/valid_till"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/card_name"
-      android:layout_marginBottom="@dimen/card_common_margin"
-      android:layout_toLeftOf="@+id/expiry_date"
-      android:text="@string/valid_till"
-      android:textSize="@dimen/valid_till_text_size"
-      tools:ignore="SmallSp" />
-
-  <EditText
-      android:id="@+id/expiry_date"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@id/card_name"
-      android:layout_centerHorizontal="true"
-      android:layout_marginBottom="@dimen/card_common_margin"
-      android:layout_marginLeft="@dimen/expiry_date_margin_left"
-      android:layout_marginStart="@dimen/expiry_date_margin_left"
-      android:layout_weight="1"
-      android:background="@color/card_text_background"
-      android:inputType="date"
-      android:maxLength="@integer/expiry_date_max_length"
-      android:singleLine="true"
-      android:textSize="@dimen/expiry_date_text_size" />
+      android:layout_marginBottom="@dimen/card_common_margin"/>
 
   <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
 
@@ -105,4 +94,4 @@
       android:focusable="true"
       android:focusableInTouchMode="true" />
 
-</merge>
+</RelativeLayout>

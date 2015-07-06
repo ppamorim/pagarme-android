@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/icon_title"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:textSize="16sp"
+    android:paddingLeft="8dp"
+    android:paddingRight="16dp"
+    android:textColor="@color/white"
+    android:text="@string/continue_checkout"/>

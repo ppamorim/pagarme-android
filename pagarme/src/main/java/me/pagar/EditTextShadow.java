@@ -7,12 +7,15 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
 public class EditTextShadow extends FrameLayout {
 
+  private int textColor;
   private int hintColor;
+  private int inputType;
   private float textSize;
   private String hint;
 
@@ -34,9 +37,12 @@ public class EditTextShadow extends FrameLayout {
   private void initView(AttributeSet attributeSet) {
     TypedArray a = getContext().obtainStyledAttributes(attributeSet, R.styleable.EditTextPagarMe);
     if(a != null) {
-      textSize = a.getDimensionPixelSize(R.styleable.EditTextPagarMe_text_size, 0);
-      hint = a.getString(R.styleable.EditTextPagarMe_hint);
-      hintColor = a.getColor(R.styleable.EditTextPagarMe_color_hint, 0);
+      inputType = a.getInt(R.styleable.EditTextPagarMe_android_inputType,
+          EditorInfo.TYPE_TEXT_VARIATION_NORMAL);
+      textSize = a.getDimensionPixelSize(R.styleable.EditTextPagarMe_android_textSize, 0);
+      textColor = a.getColor(R.styleable.EditTextPagarMe_android_textColor, 0);
+      hint = a.getString(R.styleable.EditTextPagarMe_android_hint);
+      hintColor = a.getColor(R.styleable.EditTextPagarMe_android_textColorHint, 0);
       a.recycle();
     }
   }
@@ -53,11 +59,17 @@ public class EditTextShadow extends FrameLayout {
     if(textSize > 0) {
       editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
     }
+    if(textColor > 0) {
+      editText.setTextColor(textColor);
+    }
     if(hint != null) {
       editText.setHint(hint);
     }
     if(hintColor > 0) {
       editText.setHintTextColor(hintColor);
+    }
+    if(inputType > 0) {
+      editText.setInputType(inputType);
     }
   }
 

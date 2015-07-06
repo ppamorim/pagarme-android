@@ -14,7 +14,9 @@
       android:id="@+id/card_hash_view"
       android:layout_width="match_parent"
       android:layout_height="225dp"
-      android:layout_margin="16dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="16dp"
       android:descendantFocusability="blocksDescendants"/>
 
   <me.pagar.EditTextShadow
@@ -22,9 +24,11 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       style="@style/PagarMeEditText"
-      app:hint="@string/card_number"
-      app:color_hint="@color/gray"
-      app:text_size="12sp"/>
+      android:hint="@string/card_number"
+      android:textColorHint="@color/gray"
+      android:textSize="12sp"
+      android:textColor="@color/gray_dark"
+      android:inputType="numberDecimal"/>
 
   <LinearLayout
       android:orientation="horizontal"
@@ -37,18 +41,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.7"
-        app:hint="@string/valid_thru"
-        app:color_hint="@color/gray"
-        app:text_size="12sp"/>
+        android:hint="@string/valid_thru"
+        android:textColorHint="@color/gray"
+        android:textSize="12sp"
+        android:textColor="@color/gray_dark"/>
 
     <me.pagar.EditTextShadow
         android:id="@+id/cvv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        app:hint="@string/cvv"
-        app:color_hint="@color/gray"
-        app:text_size="12sp"/>
+        android:hint="@string/cvv"
+        android:textColorHint="@color/gray"
+        android:textSize="12sp"
+        android:textColor="@color/gray_dark"/>
 
   </LinearLayout>
 
@@ -57,8 +63,9 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       style="@style/PagarMeEditText"
-      app:hint="@string/name"
-      app:color_hint="@color/gray"
-      app:text_size="12sp"/>
+      android:hint="@string/name"
+      android:textColorHint="@color/gray"
+      android:textSize="12sp"
+      android:textColor="@color/gray_dark"/>
 
 </LinearLayout>
