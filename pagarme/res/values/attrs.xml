@@ -18,7 +18,7 @@
     <attr name="android:inputType"/>
   </declare-styleable>
 
-  <declare-styleable name="CreditCardView">
+  <declare-styleable name="FrontCreditCardView">
     <attr name="cardNumber" format="string" />
     <attr name="cardNumberTextColor" format="color" />
     <attr name="cardNumberFormat" format="enum">

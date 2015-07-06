@@ -1,6 +1,5 @@
 package me.pagar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -37,7 +36,7 @@ import static me.pagar.CardType.PATTERN_DISCOVER;
 import static me.pagar.CardType.PATTERN_MASTER_CARD;
 import static me.pagar.CardType.VISA;
 
-public class CreditCardView extends RelativeLayout {
+public class FrontCreditCardView extends RelativeLayout {
 
   @IntDef({VISA, MASTERCARD, AMERICAN_EXPRESS, DISCOVER, AUTO})
   @Retention(RetentionPolicy.SOURCE)
@@ -76,11 +75,11 @@ public class CreditCardView extends RelativeLayout {
   private ImageView brandLogo;
   private ImageView chip;
 
-  public CreditCardView(Context context) {
+  public FrontCreditCardView(Context context) {
     this(context, null);
   }
 
-  public CreditCardView(Context context, @Nullable AttributeSet attrs) {
+  public FrontCreditCardView(Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
     if (context != null) {
       this.mContext = context;
@@ -100,7 +99,7 @@ public class CreditCardView extends RelativeLayout {
   private void init() {
     final LayoutInflater inflater = (LayoutInflater) mContext
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    inflater.inflate(R.layout.credit_card_view, this, true);
+    inflater.inflate(R.layout.credit_card_view_front, this, true);
     cardNumber = (TextView) findViewById(R.id.card_number);
     cardName = (TextView) findViewById(R.id.card_name);
     type = (ImageView) findViewById(R.id.card_logo);
@@ -113,31 +112,31 @@ public class CreditCardView extends RelativeLayout {
   private void loadAttributes(@Nullable AttributeSet attrs) {
 
     final TypedArray a = mContext.getTheme().obtainStyledAttributes(attrs,
-        R.styleable.CreditCardView, 0, 0);
+        R.styleable.FrontCreditCardView, 0, 0);
 
     try {
-      mCardNumber = a.getString(R.styleable.CreditCardView_cardNumber);
-      mCardName = a.getString(R.styleable.CreditCardView_cardName);
-      mExpiryDate = a.getString(R.styleable.CreditCardView_expiryDate);
-      mCardNumberTextColor = a.getColor(R.styleable.CreditCardView_cardNumberTextColor,
+      mCardNumber = a.getString(R.styleable.FrontCreditCardView_cardNumber);
+      mCardName = a.getString(R.styleable.FrontCreditCardView_cardName);
+      mExpiryDate = a.getString(R.styleable.FrontCreditCardView_expiryDate);
+      mCardNumberTextColor = a.getColor(R.styleable.FrontCreditCardView_cardNumberTextColor,
           Color.WHITE);
-      mCardNumberFormat = a.getInt(R.styleable.CreditCardView_cardNumberFormat, 0);
-      mCardNameTextColor = a.getColor(R.styleable.CreditCardView_cardNumberTextColor,
+      mCardNumberFormat = a.getInt(R.styleable.FrontCreditCardView_cardNumberFormat, 0);
+      mCardNameTextColor = a.getColor(R.styleable.FrontCreditCardView_cardNumberTextColor,
           Color.WHITE);
-      mExpiryDateTextColor = a.getColor(R.styleable.CreditCardView_expiryDateTextColor,
+      mExpiryDateTextColor = a.getColor(R.styleable.FrontCreditCardView_expiryDateTextColor,
           Color.WHITE);
-      mValidTillTextColor = a.getColor(R.styleable.CreditCardView_validTillTextColor,
+      mValidTillTextColor = a.getColor(R.styleable.FrontCreditCardView_validTillTextColor,
           Color.WHITE);
-      mType = a.getInt(R.styleable.CreditCardView_type, 0);
-      mBrandLogo = a.getResourceId(R.styleable.CreditCardView_brandLogo, 0);
+      mType = a.getInt(R.styleable.FrontCreditCardView_type, 0);
+      mBrandLogo = a.getResourceId(R.styleable.FrontCreditCardView_brandLogo, 0);
       // mBrandLogoPosition = a.getInt(R.styleable.CreditCardView_brandLogoPosition, 1);
-      mPutChip = a.getBoolean(R.styleable.CreditCardView_putChip, false);
-      mIsEditable = a.getBoolean(R.styleable.CreditCardView_isEditable, false);
+      mPutChip = a.getBoolean(R.styleable.FrontCreditCardView_putChip, false);
+      mIsEditable = a.getBoolean(R.styleable.FrontCreditCardView_isEditable, false);
       //For more granular control to the fields. Issue #7
-      mIsCardNameEditable = a.getBoolean(R.styleable.CreditCardView_isCardNameEditable, mIsEditable);
-      mIsCardNumberEditable = a.getBoolean(R.styleable.CreditCardView_isCardNumberEditable, mIsEditable);
-      mIsExpiryDateEditable = a.getBoolean(R.styleable.CreditCardView_isExpiryDateEditable, mIsEditable);
-      mHintTextColor = a.getColor(R.styleable.CreditCardView_hintTextColor, Color.WHITE);
+      mIsCardNameEditable = a.getBoolean(R.styleable.FrontCreditCardView_isCardNameEditable, mIsEditable);
+      mIsCardNumberEditable = a.getBoolean(R.styleable.FrontCreditCardView_isCardNumberEditable, mIsEditable);
+      mIsExpiryDateEditable = a.getBoolean(R.styleable.FrontCreditCardView_isExpiryDateEditable, mIsEditable);
+      mHintTextColor = a.getColor(R.styleable.FrontCreditCardView_hintTextColor, Color.WHITE);
     } finally {
       a.recycle();
     }

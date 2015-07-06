@@ -28,7 +28,7 @@ public class PagarMeActivity extends AppCompatActivity {
     cardHashView = (CardHashView) findViewById(R.id.card_hash_view);
     cardNumber = (EditTextShadow) findViewById(R.id.card_number_shadow);
     cardValidThru = (EditTextShadow) findViewById(R.id.valid_thru);
-    cardCvv = (EditTextShadow) findViewById(R.id.cvv);
+    cardCvv = (EditTextShadow) findViewById(R.id.cvv_shadow);
     cardName = (EditTextShadow) findViewById(R.id.card_name_shadow);
 
     setSupportActionBar(toolbar);
@@ -110,7 +110,7 @@ public class PagarMeActivity extends AppCompatActivity {
     @Override public void afterTextChanged(Editable s) { }
     @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
     @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-      //cardHashView.getCreditCard().setCardName(s.toString());
+      cardHashView.getBackCreditCardView().setCvv(s.toString());
     }
   };
 
