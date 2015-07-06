@@ -31,7 +31,9 @@ public class SpringSequencer {
    * @return Actual instance of SpringSequencer.
    */
   public SpringSequencer clear() {
-    springs.clear();
+    if(springs.size() > 0) {
+      springs.clear();
+    }
     return this;
   }
 
@@ -50,7 +52,9 @@ public class SpringSequencer {
       this.mEndValue = endValue;
       reset();
     }
-    
+
+    System.out.println(" position: " + position + " springs: " + springs.size());
+
     if(springs.size() <= 0) {
       throw new IllegalStateException("Springs don't have one item");
     }

@@ -15,17 +15,15 @@ import com.facebook.rebound.SpringUtil;
 
 public class CardHashView extends ViewFlipper {
 
-  private ShadowLayout shadowLayout;
-  private CreditCardView creditCardView;
-  private CreditCardView mBackView;
-  private CardHashListener cardHashListener;
+  private float rotate;
 
-  float rotate;
+  private ShadowLayout shadowLayout;
+  private FrontCreditCardView frontCreditCardView;
+  private BackCreditCardView backCreditCardView;
 
   private Spring scaleSpringZoomIn;
   private Spring scaleSpringZoomOut;
   private Spring rotateSpring;
-
   private SpringSequencer springSequencer;
 
   public CardHashView(Context context) {
@@ -36,10 +34,6 @@ public class CardHashView extends ViewFlipper {
     super(context, attrs);
     initView(context, attrs);
     springSequencer = new SpringSequencer();
-    springSequencer.add(0, scaleSpringZoomIn());
-    springSequencer.add(1, rotateSpring());
-    springSequencer.add(2, scaleSpringZoomOut());
-
   }
 
   @Override protected void onAttachedToWindow() {
@@ -59,22 +53,34 @@ public class CardHashView extends ViewFlipper {
   private void initView(Context context, AttributeSet attrs) {
     LayoutInflater.from(context).inflate(R.layout.card_hash_view, this, true);
     shadowLayout = (ShadowLayout) findViewById(R.id.shadow_layout);
-    creditCardView = (CreditCardView) findViewById(R.id.credit_card_view);
-    mBackView = (CreditCardView) findViewById(R.id.include_back);
+    frontCreditCardView = (FrontCreditCardView) findViewById(R.id.credit_card_view);
+    backCreditCardView = (BackCreditCardView) findViewById(R.id.back_credit_card_view);
     if (attrs != null) {
       final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FlipView);
     }
   }
 
-  public CreditCardView getCreditCard() {
-    return creditCardView;
+  public FrontCreditCardView getCreditCard() {
+    return frontCreditCardView;
+  }
+
+  public BackCreditCardView getBackCreditCardView() {
+    return backCreditCardView;
   }
 
   public void showCard() {
+    springSequencer.clear();
+    springSequencer.add(0, scaleSpringZoomOut());
+    springSequencer.add(1, rotateSpring());
+    //springSequencer.add(2, scaleSpringZoomIn()); <-- Problem here
     springSequencer.setEndValue(0);
   }
 
   public void showBack() {
+    springSequencer.clear();
+    springSequencer.add(0, scaleSpringZoomIn());
+    springSequencer.add(1, rotateSpring());
+    springSequencer.add(2, scaleSpringZoomOut());
     springSequencer.setEndValue(1);
   }
 
@@ -82,29 +88,27 @@ public class CardHashView extends ViewFlipper {
     return springSequencer.springEnd();
   }
 
+  private void scaleViews(float scale) {
+    ViewCompat.setScaleX(shadowLayout, scale);
+    ViewCompat.setScaleY(shadowLayout, scale);
+    ViewCompat.setScaleY(frontCreditCardView, scale);
+    ViewCompat.setScaleX(frontCreditCardView, scale);
+    ViewCompat.setScaleY(backCreditCardView, scale);
+    ViewCompat.setScaleX(backCreditCardView, scale);
+  }
+
   private SimpleSpringListener scaleSpringZoomInListener = new SimpleSpringListener() {
     @Override public void onSpringUpdate(Spring spring) {
       super.onSpringUpdate(spring);
-      float scale = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 1, 0.6);
-      ViewCompat.setScaleX(shadowLayout, scale);
-      ViewCompat.setScaleY(shadowLayout, scale);
-      ViewCompat.setScaleY(creditCardView, scale);
-      ViewCompat.setScaleX(creditCardView, scale);
-      ViewCompat.setScaleY(mBackView, scale);
-      ViewCompat.setScaleX(mBackView, scale);
+      scaleViews((float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 1, 0.6));
     }
   };
 
   private SimpleSpringListener scaleSpringZoomOutListener = new SimpleSpringListener() {
     @Override public void onSpringUpdate(Spring spring) {
       super.onSpringUpdate(spring);
-      float scale = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 0.6, 1);
-      ViewCompat.setScaleX(shadowLayout, scale);
-      ViewCompat.setScaleY(shadowLayout, scale);
-      ViewCompat.setScaleY(creditCardView, scale);
-      ViewCompat.setScaleX(creditCardView, scale);
-      ViewCompat.setScaleY(mBackView, scale);
-      ViewCompat.setScaleX(mBackView, scale);
+      scaleViews(
+          (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 0.6, 1));
     }
   };
 
@@ -113,14 +117,14 @@ public class CardHashView extends ViewFlipper {
       super.onSpringUpdate(spring);
       rotate = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 0, 180);
       if(rotate > 90) {
-        creditCardView.setVisibility(GONE);
-        mBackView.setVisibility(VISIBLE);
+        frontCreditCardView.setVisibility(GONE);
+        backCreditCardView.setVisibility(VISIBLE);
       } else {
-        creditCardView.setVisibility(VISIBLE);
-        mBackView.setVisibility(GONE);
+        frontCreditCardView.setVisibility(VISIBLE);
+        backCreditCardView.setVisibility(GONE);
       }
-      ViewCompat.setRotationY(creditCardView, rotate);
-      ViewCompat.setRotationY(mBackView, rotate);
+      ViewCompat.setRotationY(frontCreditCardView, rotate);
+      ViewCompat.setRotationY(backCreditCardView, 180 - rotate);
     }
   };
 
@@ -132,7 +136,7 @@ public class CardHashView extends ViewFlipper {
               .create()
               .createSpring()
               .setSpringConfig(
-                  SpringConfig.fromOrigamiTensionAndFriction(50, 10));
+                  SpringConfig.fromBouncinessAndSpeed(0, 30));
         }
       }
     }
@@ -147,7 +151,7 @@ public class CardHashView extends ViewFlipper {
               .create()
               .createSpring()
               .setSpringConfig(
-                  SpringConfig.fromOrigamiTensionAndFriction(50, 10));
+                  SpringConfig.fromBouncinessAndSpeed(0, 30));
         }
       }
     }
@@ -162,7 +166,7 @@ public class CardHashView extends ViewFlipper {
               .create()
               .createSpring()
               .setSpringConfig(
-                  SpringConfig.fromOrigamiTensionAndFriction(40, 5));
+                  SpringConfig.fromOrigamiTensionAndFriction(60, 5));
         }
       }
     }
