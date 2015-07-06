@@ -45,6 +45,7 @@ public class PagarMeActivity extends AppCompatActivity {
     cardValidThru.addTextChangedListener(cardValidThruTextWatcher);
     cardCvv.addTextChangedListener(cardCvvTextWatcher);
     cardName.addTextChangedListener(cardNameTextWatcher);
+    cardHashView.setOnClickListener(onCardHashViewClick);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -70,6 +71,16 @@ public class PagarMeActivity extends AppCompatActivity {
     return true;
   }
 
+  private View.OnClickListener onCardHashViewClick = new View.OnClickListener() {
+    @Override public void onClick(View v) {
+      if(cardHashView.isRotated()) {
+        cardHashView.showCard();
+      } else {
+        cardHashView.showBack();
+      }
+    }
+  };
+
   private View.OnClickListener onClickListener = new View.OnClickListener() {
     @Override public void onClick(View v) {
       onCheckoutClick();
@@ -77,7 +88,6 @@ public class PagarMeActivity extends AppCompatActivity {
   };
 
   private void onCheckoutClick() {
-    System.out.println("testeeeeeeeeeeeeeeeee");
   }
 
   private TextWatcher cardNumberTextWatcher = new TextWatcher() {

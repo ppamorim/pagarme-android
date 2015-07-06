@@ -56,6 +56,10 @@ public class EditTextShadow extends FrameLayout {
     View view = LayoutInflater.from(getContext()).inflate(R.layout.edit_text_pagarme, null);
     editText = (EditText) view.findViewById(R.id.edit_text);
     addView(view);
+    configView();
+  }
+
+  private void configView() {
     if(textSize > 0) {
       editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
     }
