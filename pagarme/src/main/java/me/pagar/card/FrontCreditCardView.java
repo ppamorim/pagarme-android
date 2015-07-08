@@ -1,4 +1,4 @@
-package me.pagar;
+package me.pagar.card;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -22,19 +22,20 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.regex.Pattern;
+import me.pagar.R;
 
-import static me.pagar.CardNumberFormat.ALL_DIGITS;
-import static me.pagar.CardNumberFormat.MASKED_ALL;
-import static me.pagar.CardNumberFormat.MASKED_ALL_BUT_LAST_FOUR;
-import static me.pagar.CardNumberFormat.ONLY_LAST_FOUR;
-import static me.pagar.CardType.AMERICAN_EXPRESS;
-import static me.pagar.CardType.AUTO;
-import static me.pagar.CardType.DISCOVER;
-import static me.pagar.CardType.MASTERCARD;
-import static me.pagar.CardType.PATTERN_AMERICAN_EXPRESS;
-import static me.pagar.CardType.PATTERN_DISCOVER;
-import static me.pagar.CardType.PATTERN_MASTER_CARD;
-import static me.pagar.CardType.VISA;
+import static me.pagar.card.CardNumberFormat.ALL_DIGITS;
+import static me.pagar.card.CardNumberFormat.MASKED_ALL;
+import static me.pagar.card.CardNumberFormat.MASKED_ALL_BUT_LAST_FOUR;
+import static me.pagar.card.CardNumberFormat.ONLY_LAST_FOUR;
+import static me.pagar.card.CardType.AMERICAN_EXPRESS;
+import static me.pagar.card.CardType.AUTO;
+import static me.pagar.card.CardType.DISCOVER;
+import static me.pagar.card.CardType.MASTERCARD;
+import static me.pagar.card.CardType.PATTERN_AMERICAN_EXPRESS;
+import static me.pagar.card.CardType.PATTERN_DISCOVER;
+import static me.pagar.card.CardType.PATTERN_MASTER_CARD;
+import static me.pagar.card.CardType.VISA;
 
 public class FrontCreditCardView extends RelativeLayout {
 

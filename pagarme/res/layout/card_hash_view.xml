@@ -14,7 +14,7 @@
       app:sl_shadowColor="#40000000"
       app:sl_cornerRadius="16dp"/>
 
-    <me.pagar.FrontCreditCardView
+    <me.pagar.card.FrontCreditCardView
         android:id="@+id/credit_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
         app:type="visa"
         app:validTillTextColor="#cccccc"/>
 
-    <me.pagar.BackCreditCardView
+    <me.pagar.card.BackCreditCardView
         android:id="@+id/back_credit_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

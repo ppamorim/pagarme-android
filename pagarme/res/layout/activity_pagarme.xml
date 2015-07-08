@@ -9,7 +9,7 @@
       android:layout_height="56dp"
       android:background="?attr/colorPrimary"/>
 
-  <me.pagar.CardHashView
+  <me.pagar.card.CardHashView
       android:id="@+id/card_hash_view"
       android:layout_width="match_parent"
       android:layout_height="225dp"

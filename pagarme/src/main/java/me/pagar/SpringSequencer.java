@@ -1,5 +1,6 @@
 package me.pagar;
 
+import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringListener;
 import java.util.ArrayList;
@@ -53,23 +54,18 @@ public class SpringSequencer {
       reset();
     }
 
-    System.out.println(" position: " + position + " springs: " + springs.size());
-
     if(springs.size() <= 0) {
       throw new IllegalStateException("Springs don't have one item");
     }
 
-    if(springs.size() > position) {
+    if(!animationEnd && springs.size() > position) {
       Spring spring = springs.get(position);
       if(spring != null) {
-        spring.addListener(new SpringListener() {
+        spring.addListener(new SimpleSpringListener() {
           @Override public void onSpringAtRest(Spring spring) {
             position++;
             setEndValue(mEndValue);
           }
-          @Override public void onSpringUpdate(Spring spring) { }
-          @Override public void onSpringActivate(Spring spring) { }
-          @Override public void onSpringEndStateChange(Spring spring) { }
         }).setEndValue(mEndValue);
       }
     } else {

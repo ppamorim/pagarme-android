@@ -1,4 +1,4 @@
-package me.pagar;
+package me.pagar.card;
 
 public class CardType {
   public static final int VISA = 0;

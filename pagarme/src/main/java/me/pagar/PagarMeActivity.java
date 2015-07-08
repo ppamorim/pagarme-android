@@ -11,6 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+import me.pagar.card.CardHashView;
+import me.pagar.interfaces.CheckoutListener;
+import me.pagar.model.CreditCard;
 
 public class PagarMeActivity extends AppCompatActivity {
 
@@ -30,13 +34,6 @@ public class PagarMeActivity extends AppCompatActivity {
     cardValidThru = (EditTextShadow) findViewById(R.id.valid_thru);
     cardCvv = (EditTextShadow) findViewById(R.id.cvv_shadow);
     cardName = (EditTextShadow) findViewById(R.id.card_name_shadow);
-
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if(actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-      actionBar.setHomeButtonEnabled(true);
-    }
   }
 
   @Override protected void onPostCreate(Bundle savedInstanceState) {
@@ -46,6 +43,7 @@ public class PagarMeActivity extends AppCompatActivity {
     cardCvv.addTextChangedListener(cardCvvTextWatcher);
     cardName.addTextChangedListener(cardNameTextWatcher);
     cardHashView.setOnClickListener(onCardHashViewClick);
+    configToolbar();
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -62,13 +60,17 @@ public class PagarMeActivity extends AppCompatActivity {
     getMenuInflater().inflate(R.menu.checkout, menu);
     MenuItem inboxMenuItem = menu.findItem(R.id.action_checkout);
     inboxMenuItem.setActionView(R.layout.checkout_button);
+    return true;
+  }
+
+  @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    boolean isCreated = super.onPrepareOptionsMenu(menu);
     new Handler().post(new Runnable() {
       @Override public void run() {
-        TextView textView = (TextView) findViewById(R.id.icon_title);
-        textView.setOnClickListener(onClickListener);
+        findViewById(R.id.icon_title).setOnClickListener(onClickListener);
       }
     });
-    return true;
+    return isCreated;
   }
 
   private View.OnClickListener onCardHashViewClick = new View.OnClickListener() {
@@ -88,7 +90,28 @@ public class PagarMeActivity extends AppCompatActivity {
   };
 
   private void onCheckoutClick() {
+    CreditCard creditCard = new CreditCard();
+    PagarMe.with(this).checkout(creditCard).callback(checkoutListener).execute();
   }
+
+  private void configToolbar() {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if(actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setHomeButtonEnabled(true);
+    }
+  }
+
+  private CheckoutListener checkoutListener = new CheckoutListener() {
+    @Override public void onCheckoutSuccess() {
+      Toast.makeText(getApplicationContext(), "SUCCESS", Toast.LENGTH_LONG).show();
+    }
+
+    @Override public void onCheckoutFail() {
+      Toast.makeText(getApplicationContext(), "FAIL", Toast.LENGTH_LONG).show();
+    }
+  };
 
   private TextWatcher cardNumberTextWatcher = new TextWatcher() {
     @Override public void afterTextChanged(Editable s) {}

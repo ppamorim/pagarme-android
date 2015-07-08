@@ -1,10 +1,11 @@
-package me.pagar;
+package me.pagar.card;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import me.pagar.R;
 
 public class BackCreditCardView extends RelativeLayout {
 

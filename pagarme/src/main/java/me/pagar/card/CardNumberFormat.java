@@ -1,4 +1,4 @@
-package me.pagar;
+package me.pagar.card;
 
 public class CardNumberFormat {
   public static final int ALL_DIGITS = 0;

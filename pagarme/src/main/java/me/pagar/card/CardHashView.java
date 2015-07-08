@@ -1,4 +1,4 @@
-package me.pagar;
+package me.pagar.card;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,6 +12,8 @@ import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
+import me.pagar.R;
+import me.pagar.SpringSequencer;
 
 public class CardHashView extends ViewFlipper {
 

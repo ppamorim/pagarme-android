@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <me.pagar.CardHashView
+  <me.pagar.card.CardHashView
       android:id="@+id/flip_listener_view_demo"
       android:layout_width="match_parent"
       android:layout_height="225dp"
