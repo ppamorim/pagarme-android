@@ -15,13 +15,12 @@ public class CheckoutTask implements CheckoutRunnableCallback {
     this.checkoutManager = checkoutManager;
   }
 
-  // Returns the instance that downloaded the image
   Runnable getCheckoutRunnable() {
     return checkoutRunnable;
   }
 
   @Override public void onRequestSuccess() {
-
+    checkoutRunnable.
   }
 
   @Override public void onIOException() {

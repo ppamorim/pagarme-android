@@ -1,5 +1,6 @@
 package me.pagar.runnable;
 
+import android.os.Debug;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class CheckoutRunnable implements Runnable {
         throw new InterruptedException();
       }
       InputStream inputStream = TransactionService.test();
+      System.out.println("AEEEEEE");
       if(Thread.interrupted()) {
         throw new InterruptedException();
       }
