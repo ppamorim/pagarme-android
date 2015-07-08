@@ -34,7 +34,7 @@
         android:id="@+id/back_credit_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/cardbackground_back"
+        android:background="@drawable/card_back"
         android:rotationY="180"
         android:visibility="gone"/>
 

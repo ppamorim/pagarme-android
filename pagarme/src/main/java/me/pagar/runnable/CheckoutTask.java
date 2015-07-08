@@ -20,7 +20,6 @@ public class CheckoutTask implements CheckoutRunnableCallback {
   }
 
   @Override public void onRequestSuccess() {
-    checkoutRunnable.
   }
 
   @Override public void onIOException() {
