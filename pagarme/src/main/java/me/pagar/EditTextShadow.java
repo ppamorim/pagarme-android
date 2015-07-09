@@ -81,4 +81,8 @@ public class EditTextShadow extends FrameLayout {
     editText.addTextChangedListener(textWatcher);
   }
 
+  public void setOnFocusChangeListener(OnFocusChangeListener onFocusChangedListener) {
+    editText.setOnFocusChangeListener(onFocusChangedListener);
+  }
+
 }

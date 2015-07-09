@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_hash_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="4dp">
+    android:layout_height="match_parent">
 
   <com.dd.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,12 +11,14 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:sl_shadowColor="#40000000"
+      android:visibility="gone"
       app:sl_cornerRadius="16dp"/>
 
     <me.pagar.card.FrontCreditCardView
         android:id="@+id/credit_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:background="@drawable/cardbackground_sky"
         app:cardNameTextColor="#cccccc"
         app:cardNumberFormat="all_digits"
@@ -34,6 +35,7 @@
         android:id="@+id/back_credit_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:background="@drawable/card_back"
         android:rotationY="180"
         android:visibility="gone"/>

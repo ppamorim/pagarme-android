@@ -2,14 +2,17 @@ package me.pagar.runnable;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
+import java.io.InputStream;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import me.pagar.interfaces.CheckoutListener;
 
-public class CheckoutManager {
+public class CheckoutManager  {
+
+  private static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
   // A queue of Runnables for the image decoding pool
   private final BlockingQueue<Runnable> checkoutWorkQueue;
@@ -35,11 +38,10 @@ public class CheckoutManager {
   // A managed pool of background decoder threads
   private final ThreadPoolExecutor checkoutThreadPool;
 
-  // An object that manages Messages in a Thread
-  private Handler handler;
-
   // A single instance of PhotoManager, used to implement the singleton pattern
   private static CheckoutManager singleton = null;
+
+  private CheckoutListener checkoutListener;
 
   /**
    * NOTE: This is the number of total available cores. On current versions of
@@ -63,24 +65,14 @@ public class CheckoutManager {
     checkoutTask = new LinkedBlockingQueue<>();
     checkoutThreadPool = new ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES,
         KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, checkoutWorkQueue);
-    handler = new Handler(Looper.getMainLooper()) {
-      @Override public void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        CheckoutTask checkoutTask = (CheckoutTask) msg.obj;
-      }
-    };
   }
 
-  /**
-   * Returns the CheckoutManager object
-   * @return The global CheckoutManager object
-   */
   public static CheckoutManager getInstance() {
     return singleton;
   }
 
-
-  public static CheckoutTask startCheckout() {
+  public static CheckoutTask startCheckout(CheckoutListener checkoutListener) {
+    singleton.checkoutListener = checkoutListener;
     CheckoutTask checkoutTask = singleton.checkoutTask.poll();
     if(checkoutTask == null) {
       checkoutTask = new CheckoutTask();
@@ -88,6 +80,28 @@ public class CheckoutManager {
     checkoutTask.initialize(CheckoutManager.singleton);
     singleton.checkoutThreadPool.execute(checkoutTask.getCheckoutRunnable());
     return checkoutTask;
+  }
+
+  public void onRequestSuccess(final InputStream inputStream) {
+    HANDLER.post(new Runnable() {
+      @Override public void run() {
+        if(checkoutListener != null) {
+          checkoutListener.onCheckoutSuccess(inputStream);
+        }
+      }
+    });
+  }
+
+  public void onIOException() {
+
+  }
+
+  public void onJSONException() {
+
+  }
+
+  public void onInterruptedException() {
+
   }
 
 }

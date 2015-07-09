@@ -1,5 +1,6 @@
 package me.pagar.runnable;
 
+import java.io.InputStream;
 import me.pagar.interfaces.CheckoutRunnableCallback;
 
 public class CheckoutTask implements CheckoutRunnableCallback {
@@ -15,11 +16,12 @@ public class CheckoutTask implements CheckoutRunnableCallback {
     this.checkoutManager = checkoutManager;
   }
 
-  Runnable getCheckoutRunnable() {
+  public Runnable getCheckoutRunnable() {
     return checkoutRunnable;
   }
 
-  @Override public void onRequestSuccess() {
+  @Override public void onRequestSuccess(InputStream inputStream) {
+    checkoutManager.onRequestSuccess(inputStream);
   }
 
   @Override public void onIOException() {

@@ -10,8 +10,9 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import java.io.InputStream;
 import me.pagar.card.CardHashView;
 import me.pagar.interfaces.CheckoutListener;
 import me.pagar.model.CreditCard;
@@ -20,6 +21,7 @@ public class PagarMeActivity extends AppCompatActivity {
 
   private Toolbar toolbar;
   private CardHashView cardHashView;
+  private LinearLayout containerInfo;
   private EditTextShadow cardNumber;
   private EditTextShadow cardValidThru;
   private EditTextShadow cardCvv;
@@ -30,6 +32,7 @@ public class PagarMeActivity extends AppCompatActivity {
     setContentView(R.layout.activity_pagarme);
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     cardHashView = (CardHashView) findViewById(R.id.card_hash_view);
+    containerInfo = (LinearLayout) findViewById(R.id.container_info);
     cardNumber = (EditTextShadow) findViewById(R.id.card_number_shadow);
     cardValidThru = (EditTextShadow) findViewById(R.id.valid_thru);
     cardCvv = (EditTextShadow) findViewById(R.id.cvv_shadow);
@@ -38,12 +41,21 @@ public class PagarMeActivity extends AppCompatActivity {
 
   @Override protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
+
     cardNumber.addTextChangedListener(cardNumberTextWatcher);
     cardValidThru.addTextChangedListener(cardValidThruTextWatcher);
     cardCvv.addTextChangedListener(cardCvvTextWatcher);
     cardName.addTextChangedListener(cardNameTextWatcher);
+
     cardHashView.setOnClickListener(onCardHashViewClick);
+
+    cardNumber.setOnFocusChangeListener(onFocusChangeListener);
+    cardValidThru.setOnFocusChangeListener(onFocusChangeListener);
+    cardCvv.setOnFocusChangeListener(onFocusChangeListener);
+    cardName.setOnFocusChangeListener(onFocusChangeListener);
+
     configToolbar();
+    configCardHash();
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,9 +85,15 @@ public class PagarMeActivity extends AppCompatActivity {
     return isCreated;
   }
 
+  private View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+    @Override public void onFocusChange(View v, boolean hasFocus) {
+      cardHashView.setTilt(hasFocus ? 1 : 0);
+    }
+  };
+
   private View.OnClickListener onCardHashViewClick = new View.OnClickListener() {
     @Override public void onClick(View v) {
-      if(cardHashView.isRotated()) {
+      if(cardHashView.isHorizontalRotated()) {
         cardHashView.showCard();
       } else {
         cardHashView.showBack();
@@ -103,8 +121,12 @@ public class PagarMeActivity extends AppCompatActivity {
     }
   }
 
+  private void configCardHash() {
+    cardHashView.setBottomView(containerInfo);
+  }
+
   private CheckoutListener checkoutListener = new CheckoutListener() {
-    @Override public void onCheckoutSuccess() {
+    @Override public void onCheckoutSuccess(InputStream inputStream) {
       Toast.makeText(getApplicationContext(), "SUCCESS", Toast.LENGTH_LONG).show();
     }
 

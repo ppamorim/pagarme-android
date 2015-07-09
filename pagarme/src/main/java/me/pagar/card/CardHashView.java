@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ViewFlipper;
 import com.dd.ShadowLayout;
 import com.facebook.rebound.SimpleSpringListener;
@@ -17,7 +18,10 @@ import me.pagar.SpringSequencer;
 
 public class CardHashView extends ViewFlipper {
 
-  private float rotate;
+  private double verticalCurrentValue;
+
+  private float rotateHorizontal;
+  private float rotateVertical;
 
   private ShadowLayout shadowLayout;
   private FrontCreditCardView frontCreditCardView;
@@ -25,8 +29,11 @@ public class CardHashView extends ViewFlipper {
 
   private Spring scaleSpringZoomIn;
   private Spring scaleSpringZoomOut;
-  private Spring rotateSpring;
+  private Spring rotateHorizontalSpring;
+  private Spring rotateVerticalSpring;
   private SpringSequencer springSequencer;
+
+  private View bottomView;
 
   public CardHashView(Context context) {
     this(context, null);
@@ -42,13 +49,15 @@ public class CardHashView extends ViewFlipper {
     super.onAttachedToWindow();
     scaleSpringZoomIn().addListener(scaleSpringZoomInListener);
     scaleSpringZoomOut().addListener(scaleSpringZoomOutListener);
-    rotateSpring().addListener(rotateSpringListener);
+    rotateHorizontalSpring().addListener(rotateHorizontalSpringListener);
+    rotateVerticalSpring().addListener(rotateVerticalSpringListener);
   }
 
   @Override protected void onDetachedFromWindow() {
     scaleSpringZoomIn().removeListener(scaleSpringZoomInListener);
     scaleSpringZoomOut().removeListener(scaleSpringZoomOutListener);
-    rotateSpring().removeListener(rotateSpringListener);
+    rotateHorizontalSpring().removeListener(rotateHorizontalSpringListener);
+    rotateVerticalSpring().removeListener(rotateVerticalSpringListener);
     super.onDetachedFromWindow();
   }
 
@@ -62,6 +71,10 @@ public class CardHashView extends ViewFlipper {
     }
   }
 
+  public void setBottomView(View bottomView) {
+    this.bottomView = bottomView;
+  }
+
   public FrontCreditCardView getCreditCard() {
     return frontCreditCardView;
   }
@@ -73,7 +86,7 @@ public class CardHashView extends ViewFlipper {
   public void showCard() {
     springSequencer.clear();
     springSequencer.add(0, scaleSpringZoomOut());
-    springSequencer.add(1, rotateSpring());
+    springSequencer.add(1, rotateHorizontalSpring());
     //springSequencer.add(2, scaleSpringZoomIn()); <-- Problem here
     springSequencer.setEndValue(0);
   }
@@ -81,13 +94,25 @@ public class CardHashView extends ViewFlipper {
   public void showBack() {
     springSequencer.clear();
     springSequencer.add(0, scaleSpringZoomIn());
-    springSequencer.add(1, rotateSpring());
+    springSequencer.add(1, rotateHorizontalSpring());
     springSequencer.add(2, scaleSpringZoomOut());
     springSequencer.setEndValue(1);
   }
 
-  public boolean isRotated() {
+  public void toggleTilt() {
+    rotateVerticalSpring().setEndValue(rotateVerticalSpring().getCurrentValue() == 0 ? 1 : 0);
+  }
+
+  public void setTilt(int endValue) {
+    rotateVerticalSpring().setEndValue(rotateVerticalSpring().getCurrentValue() == 0 ? 1 : 0);
+  }
+
+  public boolean isHorizontalRotated() {
     return springSequencer.springEnd();
+  }
+
+  public boolean isVerticalRotated() {
+    return rotateVerticalSpring.getCurrentValue() == 1;
   }
 
   private void scaleViews(float scale) {
@@ -114,19 +139,49 @@ public class CardHashView extends ViewFlipper {
     }
   };
 
-  private SimpleSpringListener rotateSpringListener = new SimpleSpringListener() {
+  private SimpleSpringListener rotateHorizontalSpringListener = new SimpleSpringListener() {
     @Override public void onSpringUpdate(Spring spring) {
       super.onSpringUpdate(spring);
-      rotate = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 0, 180);
-      if(rotate > 90) {
+      rotateHorizontal = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 0, 180);
+      if(rotateHorizontal > 90) {
         frontCreditCardView.setVisibility(GONE);
         backCreditCardView.setVisibility(VISIBLE);
       } else {
         frontCreditCardView.setVisibility(VISIBLE);
         backCreditCardView.setVisibility(GONE);
       }
-      ViewCompat.setRotationY(frontCreditCardView, rotate);
-      ViewCompat.setRotationY(backCreditCardView, 180 - rotate);
+      ViewCompat.setRotationY(frontCreditCardView, rotateHorizontal);
+      ViewCompat.setRotationY(backCreditCardView, 180 - rotateHorizontal);
+    }
+  };
+
+  private SimpleSpringListener rotateVerticalSpringListener = new SimpleSpringListener() {
+    @Override public void onSpringUpdate(Spring spring) {
+      super.onSpringUpdate(spring);
+
+      verticalCurrentValue = spring.getCurrentValue();
+
+      float rotation = (float) SpringUtil.mapValueFromRangeToRange(verticalCurrentValue, 0, 1,
+          0, -30);
+      ViewCompat.setRotationX(frontCreditCardView, rotation);
+      ViewCompat.setRotationX(backCreditCardView, rotation);
+
+      float scale = (float) SpringUtil.mapValueFromRangeToRange(verticalCurrentValue, 0, 1, 1, 0.7);
+      ViewCompat.setScaleX(frontCreditCardView, scale);
+      ViewCompat.setScaleY(frontCreditCardView, scale);
+      ViewCompat.setScaleX(backCreditCardView, scale);
+      ViewCompat.setScaleY(backCreditCardView, scale);
+
+      if(bottomView != null) {
+        int creditCardHeight = frontCreditCardView.getHeight();
+        float cardPositionY = (float) SpringUtil.mapValueFromRangeToRange(verticalCurrentValue, 0,
+            1, 0, -(creditCardHeight / 6.5));
+        ViewCompat.setTranslationY(frontCreditCardView, cardPositionY);
+        ViewCompat.setTranslationY(backCreditCardView, cardPositionY);
+        ViewCompat.setTranslationY(bottomView,
+            (float) SpringUtil.mapValueFromRangeToRange(verticalCurrentValue, 0, 1, 0,
+                -(creditCardHeight / 2.5)));
+      }
     }
   };
 
@@ -160,11 +215,11 @@ public class CardHashView extends ViewFlipper {
     return scaleSpringZoomOut;
   }
 
-  private Spring rotateSpring() {
-    if(rotateSpring == null) {
+  private Spring rotateHorizontalSpring() {
+    if(rotateHorizontalSpring == null) {
       synchronized (Spring.class) {
-        if(rotateSpring == null) {
-          rotateSpring = SpringSystem
+        if(rotateHorizontalSpring == null) {
+          rotateHorizontalSpring = SpringSystem
               .create()
               .createSpring()
               .setSpringConfig(
@@ -172,7 +227,22 @@ public class CardHashView extends ViewFlipper {
         }
       }
     }
-    return rotateSpring;
+    return rotateHorizontalSpring;
+  }
+
+  private Spring rotateVerticalSpring() {
+    if(rotateVerticalSpring == null) {
+      synchronized (Spring.class) {
+        if(rotateVerticalSpring == null) {
+          rotateVerticalSpring = SpringSystem
+              .create()
+              .createSpring()
+              .setSpringConfig(
+                  SpringConfig.fromOrigamiTensionAndFriction(60, 5));
+        }
+      }
+    }
+    return rotateVerticalSpring;
   }
 
 }

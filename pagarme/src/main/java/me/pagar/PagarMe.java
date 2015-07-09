@@ -1,6 +1,7 @@
 package me.pagar;
 
 import android.content.Context;
+import java.io.InputStream;
 import me.pagar.interfaces.CheckoutListener;
 import me.pagar.model.CreditCard;
 import me.pagar.runnable.CheckoutManager;
@@ -15,7 +16,6 @@ public class PagarMe {
   private CreditCard creditCard;
 
   private CheckoutTask checkoutTask;
-  private CheckoutListener checkoutListener;
 
   public PagarMe(Context context) {
     this.context = context;
@@ -43,8 +43,18 @@ public class PagarMe {
   }
 
   public void execute() {
-    checkoutTask = CheckoutManager.startCheckout();
+    checkoutTask = CheckoutManager.startCheckout(checkoutListener);
   }
+
+  private CheckoutListener checkoutListener = new CheckoutListener() {
+    @Override public void onCheckoutSuccess(InputStream inputStream) {
+      System.out.println("teste!");
+    }
+
+    @Override public void onCheckoutFail() {
+
+    }
+  };
 
   /** Fluent API for creating {@link PagarMe} instances. */
   @SuppressWarnings("UnusedDeclaration") // Public API.

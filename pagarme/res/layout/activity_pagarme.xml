@@ -12,58 +12,63 @@
   <me.pagar.card.CardHashView
       android:id="@+id/card_hash_view"
       android:layout_width="match_parent"
-      android:layout_height="225dp"
-      android:layout_marginLeft="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginTop="16dp"/>
-
-  <me.pagar.EditTextShadow
-      android:id="@+id/card_number_shadow"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      style="@style/PagarMeEditText"
-      android:hint="@string/card_number"
-      android:textColorHint="@color/gray"
-      android:textSize="12sp"
-      android:textColor="@color/gray_dark"
-      android:inputType="numberDecimal"/>
+      android:layout_height="225dp"/>
 
   <LinearLayout
-      android:orientation="horizontal"
+      android:id="@+id/container_info"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      style="@style/PagarMeEditText">
+      android:layout_height="match_parent"
+      android:orientation="vertical">
 
     <me.pagar.EditTextShadow
-        android:id="@+id/valid_thru"
-        android:layout_width="0dp"
+        android:id="@+id/card_number_shadow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
-        android:hint="@string/valid_thru"
+        style="@style/PagarMeEditText"
+        android:hint="@string/card_number"
         android:textColorHint="@color/gray"
         android:textSize="12sp"
-        android:textColor="@color/gray_dark"/>
+        android:textColor="@color/gray_dark"
+        android:inputType="numberDecimal"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/PagarMeEditText">
+
+      <me.pagar.EditTextShadow
+          android:id="@+id/valid_thru"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.7"
+          android:hint="@string/valid_thru"
+          android:textColorHint="@color/gray"
+          android:textSize="12sp"
+          android:textColor="@color/gray_dark"/>
+
+      <me.pagar.EditTextShadow
+          android:id="@+id/cvv_shadow"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.3"
+          android:hint="@string/cvv"
+          android:textColorHint="@color/gray"
+          android:textSize="12sp"
+          android:textColor="@color/gray_dark"/>
+
+    </LinearLayout>
 
     <me.pagar.EditTextShadow
-        android:id="@+id/cvv_shadow"
-        android:layout_width="0dp"
+        android:id="@+id/card_name_shadow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:hint="@string/cvv"
+        style="@style/PagarMeEditText"
+        android:hint="@string/name"
         android:textColorHint="@color/gray"
         android:textSize="12sp"
         android:textColor="@color/gray_dark"/>
 
   </LinearLayout>
-
-  <me.pagar.EditTextShadow
-      android:id="@+id/card_name_shadow"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      style="@style/PagarMeEditText"
-      android:hint="@string/name"
-      android:textColorHint="@color/gray"
-      android:textSize="12sp"
-      android:textColor="@color/gray_dark"/>
 
 </LinearLayout>
